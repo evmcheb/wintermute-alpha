@@ -1,0 +1,16 @@
+- a) Describe the vulnerability and the payoffs for an attacker.
+OZ ERC-4626 < v4.9 is vulnerable to an inflation attack. 
+In empty or near empty vaults, an attacker needs to wait for an innocent user to deposit assets into the vault expecting to receive shares.
+Frontrunning their deposit transaction, the attacker can:
+1. Take majority ownership of the empty vault by depositing a small amount of assets.
+2. Donate (transfer assets without smart contract call) an amount of assets > than the innocent user deposit
+3. Since the vault will call balanceOf(address(this)) to calculate the number of shares, the user is owed < 1 wei of share
+4. EVM will round down to 0 shares, donating the users assets to the attacker.
+
+In empty/very near empty vaults, the attacker can make away with 100% of the user deposit. 
+In small vaults, the user may suffer double digit % losses. 
+For example, if the attacker can only manipulate the rates such that the innocent user deserves 1.99 shares this will be rounded down to 1 wei, nearly a 50% loss.
+The 50% loss will be donated to the existing shareholders of the vault, including the attacker.
+
+- b)  Produce code that can check if this vulnerability has occurred in the past and determine how much value was lost, if any.
+We look for two ERC-4626 deposit events in one block, where the first deposit takes up >99% of the vault, and the second deposit receives <2 shares.

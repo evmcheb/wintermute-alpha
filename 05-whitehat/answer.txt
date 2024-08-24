@@ -1,0 +1,15 @@
+https://github.com/maticnetwork/bor/blob/master/params/config.go#L237
+https://grep.app/search?q=%220000000000000000000000000000000000001010%22%3A
+https://github.com/search?q=BlockAlloc%3A+map%5Bstring%5Dinterface%7B%7D%7B&type=code
+https://github.com/bttcprotocol/bttc/blob/d7cf007ce7983cffbf1f4a1ff55637b4860ae630/consensus/bor/bor.go#L741
+https://github.com/maticnetwork/bor/blob/6e946c4a285ee6aeea4d5b11998fea1b30509277/params/config.go#L356
+
+The precompile is set in bor on the bor/params/config.go path.
+https://github.com/maticnetwork/bor/blob/6e946c4a285ee6aeea4d5b11998fea1b30509277/params/config.go#L356
+
+Patch to fix the bug https://github.com/maticnetwork/bor/commit/39116e6cc9c671a09f665b0f9c69157e279dacb1
+We investigate bor at https://github.com/maticnetwork/bor/tree/d3010f49bd7be9399e92404e19e35dd7cca397b1
+
+BTTC protocol was patched at this commit https://github.com/bttcprotocol/bttc/commit/de7157edb34a69cbc8110ed512dfddb73b6e1744, 
+Approx 29 days after the vuln was first found and about 3 weeks after the patch was public on github.
+
