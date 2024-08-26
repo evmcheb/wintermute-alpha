@@ -57,6 +57,7 @@ if __name__ == "__main__":
         reserves_after = (eth_reserve + amount_in, tusd_reserve - amount_out)
         price = amount_out / amount_in
         profit = (price - fair_price) * amount_in / 1e18
+        print(f"Amount ETH in: {amount_in / 1e18:.3f}")
         print(f"Trade price: {price:.3f}")
         print(f"Profit: {profit:.3f}")
         print(f"Pool prices after arb: {reserves_after[0] / reserves_after[1]:.3f}")
@@ -70,6 +71,7 @@ if __name__ == "__main__":
         reserves_after = (eth_reserve - amount_out, tusd_reserve + amount_in)
         price = 1/(amount_out / amount_in)
         profit = (fair_price - 1/price) * amount_in / 1e18
+        print(f"Amount TUSD in: {amount_in / 1e18:.3f}")
         print(f"Trade price: {price:.3f}")
         print(f"Profit: {profit:.3f}")
         print(f"Pool prices after arb: {reserves_after[1] / reserves_after[0]:.3f}")
