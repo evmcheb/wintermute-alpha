@@ -15,4 +15,6 @@ The 50% loss will be donated tofo the existing shareholders of the vault, includ
 - b)  Produce code that can check if this vulnerability has occurred in the past and determine how much value was lost, if any.
 We look for two ERC-4626 deposit events in one block, where the first deposit takes up >99% of the vault, and the second deposit receives <2 shares.
 
-- c) From the main repo run 
+- c) From the main dir run
+forge test --match-path test/01-vault.sol -vvv
+Version 4.8 of ERC4626 has been imported

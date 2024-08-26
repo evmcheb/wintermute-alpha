@@ -1,1 +1,3 @@
 forge-std/=lib/forge-std/src/
+ds-test/=lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/
+openzeppelin-contracts/=lib/openzeppelin-contracts/

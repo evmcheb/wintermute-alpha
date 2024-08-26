@@ -13,3 +13,90 @@ We investigate bor at https://github.com/maticnetwork/bor/tree/d3010f49bd7be9399
 BTTC protocol was patched at this commit https://github.com/bttcprotocol/bttc/commit/de7157edb34a69cbc8110ed512dfddb73b6e1744, 
 Approx 29 days after the vuln was first found and about 3 weeks after the patch was public on github.
 
+- a) Find at least two Polygon forks that could potentially be vulnerable.
+Start by digging through the bor repo around the time of the patch. We can see that on December the 7th, there was a patch released
+to fix the bug https://github.com/maticnetwork/bor/commit/39116e6cc9c671a09f665b0f9c69157e279dacb1
+So a good place to look for the vulnerability would be at the commit before, around https://github.com/maticnetwork/bor/tree/d3010f49bd7be9399e92404e19e35dd7cca397b1
+
+By searching strings containing 0000000000000000000000000000000000001010 in the vulnerable bor repo we see
+in command/server/chains/allocs/mainnet.json there is a file that stores the contracts to be initialized in the contract block.
+
+It is read in 
+var mainnetBor = &Chain{
+    ....
+	Genesis: &core.Genesis{
+        ........
+		Alloc:      readPrealloc("allocs/mainnet.json"),
+	},
+}
+
+so repos that are using a similar pattern of code are likely to be vulnerable
+
+Using string searching, we can see that BTTC chain is a bor fork. 
+
+//DefaultBttcMainnet returns the Bor Mainnet network gensis block.
+func DefaultBttcMainnetGenesisBlock() *Genesis {
+	return &Genesis{
+		Alloc:      readPrealloc("allocs/bttc-mainnet.json"),
+	}
+}
+Sure enough, there is a contract deployed at 0x1010
+https://bttcscan.com/address/0x0000000000000000000000000000000000001010#code
+
+It appears that the contract no longer has a transferWithSig function. We can try figure out when it was patched.
+Using v1.0.0 of the BTTC blockchain, 
+
+func DefaultGenesisBlock() *Genesis {
+	return &Genesis{
+		Config:     params.MainnetChainConfig,
+		Nonce:      66,
+		ExtraData:  hexutil.MustDecode("0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa"),
+		GasLimit:   5000,
+		Difficulty: big.NewInt(17179869184),
+		Alloc:      decodePrealloc(mainnetAllocData),
+	}
+}
+where the prealloc has been stored in a long hex string. 
+const mainnetAllocData = "\xfa\x04]X\u0793\r\x83b\x011\x8e
+But the prealloc doesn't include code setting. Just addresses and balances
+func decodePrealloc(data string) GenesisAlloc {
+	var p []struct{ Addr, Balance *big.Int }
+	if err := rlp.NewStream(strings.NewReader(data), 0).Decode(&p); err != nil {
+		panic(err)
+	}
+	ga := make(GenesisAlloc, len(p))
+	for _, account := range p {
+		ga[common.BigToAddress(account.Addr)] = GenesisAccount{Balance: account.Balance}
+	}
+	return ga
+}
+
+My conclusion from this is that the BTTC chain went live on Dec 12th, 2021 without a precompile contract at 0x1010.
+The precompile was added at this commit https://github.com/bttcprotocol/bttc/commit/f11d07437c607f7b9d3045d6da318cd67abdb190
+
+I used the heimdall-rs decompiler and we can see the patch has the transferWithSig function nulled out.
+https://i.imgur.com/6Dp1HNY.png
+
+So BTTC was never vulnerable as the blockchain was launched with no contract at 0x1010. 
+It was added later in March 2023 with the transferWithSig function removed.
+
+- b) Provide the code to check if these blockchains are safe.
+forge script script/02-vault.sol --fork-url https://polygon-rpc.com --fork-block-number 21156660
+The forge script works
+
+forge script script/02-vault.sol --fork-url https://rpc.bt.io
+
+- c) Estimate the potential maximum loss if this attack is possible on both blockchains.
+
+There is 9,971 trillion BTT in the 0x1010 contract which could all be stolen by looping the contract call. 
+So ~100% of the supply of BTT onchain could be taken, with a market value of 990mm. There are no liquid dexes on BTTC as it is a token bridged from Tron.
+There is 3mm dex liquidity on Tron
+https://i.imgur.com/FfL0R9S.png
+1.6mm liquidity on Gate.io at the touch
+https://i.imgur.com/d7GFuLP.png
+1mm liquidity on Binance at the touch
+https://i.imgur.com/JbaCR97.png
+
+Assuming the attacker could bridge all the tokens off chain onto the TRX network
+Then deposit it on cex and dex simultaneously and sell.
+I would estimate the maximum potential loss to be $3-5mm. 
