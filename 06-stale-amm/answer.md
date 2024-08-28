@@ -2,7 +2,7 @@
 It’s May 2021, and while searching for new trading pools, you discovered that someone made [2.8x](https://etherscan.io/tx/0x3f1b5baef6ea7f622834eabe7634bf89e3f473b62a73e357fdd04a1a5cf32ecf) by selling TUSD through one of the old Uniswap v1 pools. Let’s figure out how it happened.
 
 - a) What is the reason for the stale price in this pool?
-I tried to arb the pool at the latest block
+I tried to arb the pool at the latest block against the more liquid uni V2 pool. 
 forge test --match-path test/06-stale-amm.sol -vvvv --fork-url https://eth.merkle.io 
 
 https://i.imgur.com/BC08GMB.png
@@ -66,6 +66,10 @@ No arb
 Optimal arbitrage amount is selling 0.147 ETH for $77 profit.
 Average selling price of $2935, approx 21% premium.
 
+Gas fees on this date averaged 125 gwei. At 80k gas per swap,
+this equals approx 0.01 ETH to gas ~ $25. 
+Net of gas fees, profit is $52 assuming selling on a liquid CEX.
+
 c) Could you execute the arbitrage on March 14, 2022? If not, explain why.
 
 March 14 22 corresponds to block 14379788. 
@@ -83,7 +87,6 @@ modifier onlyDelegateFrom() {
 
 which is put on the Transfer, TransferFrom and Approve functions.
 This modifier essentially kills support for the old TUSD contract. Any attempt to transfer TUSD will revert. We can see this in the traces in the Foundry test.
-
 
 forge test --match-path test/06-stale-amm.sol -vvvv --fork-url https://eth.merkle.io --fork-block-number 14379788
 
