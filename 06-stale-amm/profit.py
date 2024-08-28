@@ -60,7 +60,7 @@ if __name__ == "__main__":
         print(f"Amount ETH in: {amount_in / 1e18:.3f}")
         print(f"Trade price: {price:.3f}")
         print(f"Profit: {profit:.3f}")
-        print(f"Pool prices after arb: {reserves_after[0] / reserves_after[1]:.3f}")
+        print(f"Pool prices after arb: {reserves_after[1] / reserves_after[0]:.3f}")
     else:
         print("No arb")
 

@@ -59,9 +59,7 @@ Checking arb ETH->TUSD
 Amount ETH in: 0.147
 Trade price: 2935.094
 Profit: 77.888
-Pool prices after arb: 0.000
-Checking arb TUSD->ETH
-No arb
+Pool prices after arb: 2412.856
 
 Optimal arbitrage amount is selling 0.147 ETH for $77 profit.
 Average selling price of $2935, approx 21% premium.

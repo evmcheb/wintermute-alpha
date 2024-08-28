@@ -38,6 +38,7 @@ price: 13.030000000000000000
 8 SAI Stablecoin 2788366000000000000
 price: 2.788366000000000000
 
+Yes, all these prices are stale.
 
 - b) Were markets paused in some way? Provide all necessary data to simulate the borrowing of any asset on June 5, 2019 to prove your point.
 
