@@ -8,8 +8,7 @@ import {ERC20} from "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 import {ERC4626} from "openzeppelin-contracts/contracts/token/ERC20/extensions/ERC4626.sol";
 
 contract VulnerableVault is ERC4626 {
-    constructor(ERC20 _asset) ERC4626(_asset) ERC20("VulnVault", "VulnVault") {
-    }
+    constructor(ERC20 _asset) ERC4626(_asset) ERC20("VulnVault", "VulnVault") {}
 }
 
 contract Attack is Test {
@@ -46,7 +45,7 @@ contract Attack is Test {
         // Innocent should receive 0 shares
         assertEq(innocentShares, 0);
         emit log_named_uint("number of shares received by innocent", innocentShares);
-        
+
         // Withdraw our shares
         vault.redeem(ourShares, address(this), address(this));
         // Check our balance

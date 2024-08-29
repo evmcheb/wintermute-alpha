@@ -81,10 +81,11 @@ So BTTC was never vulnerable as the blockchain was launched with no contract at 
 It was added later in March 2023 with the transferWithSig function removed.
 
 - b) Provide the code to check if these blockchains are safe.
-forge script script/02-vault.sol --fork-url https://polygon-rpc.com --fork-block-number 21156660
-The forge script works
+forge test --match-path test/05-whitehat.sol --fork-url https://polygon-rpc.com --fork-block-number 21156660
+The forge test passes
 
-forge script script/02-vault.sol --fork-url https://rpc.bt.io
+forge test --match-path test/05-whitehat.sol --fork-url https://rpc.bt.io
+The script fails
 
 - c) Estimate the potential maximum loss if this attack is possible on both blockchains.
 

@@ -6,9 +6,15 @@ import {StdCheats} from "forge-std/StdCheats.sol";
 import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 
 interface UniswapV1Pair {
-    function tokenToEthSwapInput(uint256 tokens_sold, uint256 min_eth, uint256 deadline) external returns (uint256  eth_bought);
-    function ethToTokenSwapInput(uint256 min_tokens, uint256 deadline) external payable returns (uint256 tokens_bought);
+    function tokenToEthSwapInput(uint256 tokens_sold, uint256 min_eth, uint256 deadline)
+        external
+        returns (uint256 eth_bought);
+    function ethToTokenSwapInput(uint256 min_tokens, uint256 deadline)
+        external
+        payable
+        returns (uint256 tokens_bought);
 }
+
 interface UniswapV2Router {
     function swapExactTokensForTokens(
         uint256 amountIn,
@@ -18,6 +24,7 @@ interface UniswapV2Router {
         uint256 deadline
     ) external returns (uint256[] memory amounts);
 }
+
 interface IWETH {
     function withdraw(uint256 amount) external;
 }
@@ -49,7 +56,8 @@ contract StaleAmmArb is Test {
         uint256 amountOutMin = 0;
         uint256 deadline = block.timestamp + 1000;
 
-        uint256[] memory amounts = router.swapExactTokensForTokens(amountIn, amountOutMin, path, address(this), deadline);
+        uint256[] memory amounts =
+            router.swapExactTokensForTokens(amountIn, amountOutMin, path, address(this), deadline);
         console.log("Our TUSD balance after", TUSD.balanceOf(address(this)));
         console.log("Our WETH balance after", WETH.balanceOf(address(this)));
         console.log("Amounts", amounts[0], amounts[1]);
