@@ -7,8 +7,14 @@ https://etherscan.io/address/0x9b8eb8b3d6e2e0db36f41455185fef7049a35cae
 Block = 10695007
 
 - a) What’s the edge of this liquidator that allows them to win more liquidations?
-https://etherscan.io/txs?a=0x88886841cfccbf54adbbc0b6c9cbaceabec42b8b&ps=100&p=45
+https://dune.com/queries/4027546/6779679/97103120-7cf9-4533-8d50-dbbe3cc4e182
+We can see that 0xb1340b0ce8af2def925c39cad3058167a0f36953
+and 0x7b2ef92fdecdf4a156365eb78c9e92b44588fe84
+were consistently winning liquidations until August 20. 
 
+Neither of these addresses are including the signed oracle prices in their liquidations, instead relying on passive price oracle updates. By updating the price oracle when the accounts become insolvent, 0x888 can win more liquidations. 
+
+They also burn gas tokens which neither address does, meaning they are able to trigger the liquidation earlier. 
 
 - b) When you figure out the source of the edge, you notice that their calldata is extremely obfuscated. Can you explain on how the calldata works?
 
@@ -118,4 +124,3 @@ https://docs.cdp.coinbase.com/exchange/reference/exchangerestapi_getcoinbasepric
 varg3 of the decoded calldata acts as a bitflag to decide the exact logic flow, but eventually the contract will postPrice to the oracle then call liquidateBorrow on the borrower. 
 
 - c) Write code for the bot in Solidity, and provide all necessary information to simulate this liquidation on a mainnet fork.
-
