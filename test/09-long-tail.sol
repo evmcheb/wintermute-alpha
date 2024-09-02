@@ -38,7 +38,7 @@ contract LongTail is Test, Structs {
         currencies[WETH] = 1;
     }
     function testBackrun() public {
-        uint256 amount = 15000 ether;
+        uint256 amount = 15_000 ether;
         // Flashloan 15,000 ETH
         uint256 wethBalanceBefore = IERC20(WETH).balanceOf(address(this));
         bytes memory data = abi.encode(WETH, amount, wethBalanceBefore);

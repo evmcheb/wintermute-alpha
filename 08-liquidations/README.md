@@ -57,7 +57,8 @@ It is decrypted by xoring with address(this).
 
 Once the encrypted calldata has been decoded, it delegatecalls the implementation contract.
 
-The structure of the decrypted calldata: 
+The structure of the decrypted calldata using decode.py: 
+python decode.py
 0x389eee82
 0000000000000000000000005d3a536e4d6dbd6114cc1ead35777bab948e3643 -> cToken Liquidator Repay (cDAI)
 0000000000000000000000004ddc2d193948926d02f9b1fe9e1daa0718270ed5 -> cToken Liquidation (cETH)
