@@ -7,8 +7,14 @@ name = "pypi"
 web3 = "*"
 flashbots = "*"
 eth-account = "*"
+solana = "*"
+solders = "*"
+pip = "*"
+pytest-playwright = "*"
+pandas = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
 python_version = "3.9"

@@ -54,7 +54,6 @@ With a 2bps fee, the exchange rate is approximately 1.00852678 * (1+2/10000)=1:1
 Which makes sense why there was a no-arbitrage condition before the parameter update, since the fee was 1% and the exchange rate was 1:1.00852678.
 Since the mint fee is being changed to 0.5%, there is a ~0.35% arbitrage opportunity.
 
-
 forge test --match-path test/09-long-tail.sol -vvv --rpc-url $RPC --fork-block-number 12473575
 
 Ran 1 test for test/09-long-tail.sol:LongTail
@@ -62,3 +61,6 @@ Ran 1 test for test/09-long-tail.sol:LongTail
 Logs:
   ETH received from swap: 15025927963425171517074
   WETH Profit: 25.927963425171517074
+
+
+// TODO: check historical flashbots bid amount and simulate with full maxETH amount. 
