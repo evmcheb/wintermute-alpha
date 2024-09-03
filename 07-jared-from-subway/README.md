@@ -3,6 +3,9 @@ You are click trading a newly launched memecoin and notice you are being sandwic
 
 
 - a) Produce the code to calculate Jared’s revenue.
+
+
+
 - b) Produce the code to calculate Jared’s costs and use this to:
     - Compute their profit.
     - Identify the opportunity that yielded the highest single profit.

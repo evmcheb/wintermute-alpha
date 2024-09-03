@@ -57,32 +57,24 @@ Before I could cross reference this data with the SFDP stake addresses, we need 
     "jsonrpc": "2.0",
     "id": 1,
     "method": "getVoteAccounts",
-    "params": [
-      {
-        "votePubkey": "3Rk99suwAvvJgyLpDYEJeC2YPPLw1enc5T1r6J8ZoRSr"
-      }
-    ]
+    "params": [ { "votePubkey": "3Rk99suwAvvJgyLpDYEJeC2YPPLw1enc5T1r6J8ZoRSr" } ]
   }
 ' | jq
 {
   "jsonrpc": "2.0",
   "result": {
-    "current": [
-      {
-        "activatedStake": 45632014819580,
-        "commission": 0,
-        "epochCredits": [ [ 661, 101584059, 101167919 ], [ 662, 102001563, 101584059 ], [ 663, 102420204, 102001563 ], [ 664, 102831357, 102420204 ], [ 665, 102846084, 102831357 ] ],
-        "epochVoteAccount": true,
-        "lastVote": 287295069,
-        "nodePubkey": "6aiX7kVpUovCpbrLsMzG92qHcyhBrFcviDWHn2VzYYGB",
-        "rootSlot": 287295026,
-        "votePubkey": "3Rk99suwAvvJgyLpDYEJeC2YPPLw1enc5T1r6J8ZoRSr"
-      }
-    ],
+    "current": [ { ...  "nodePubkey": "6aiX7kVpUovCpbrLsMzG92qHcyhBrFcviDWHn2VzYYGB", } ],
     "delinquent": []
   },
   "id": 1
 }
+
+After cross referencing the SFDP members with the stakeview.app data, I found 29 validators that had more than 40% of their stake removed, for a total of 1,881,712 SOL ~= 250mm.
+
+I chose 40% as the threshold as the SFDP has a matching stake program, so not all of their stake would be removed.
+
+The specific validators that had their stake removed can be found in the `scrape_stake.ipynb` file.
+
 
 - c) Write code that, given a Solana block, outputs whether a sandwich attack was included.
 
