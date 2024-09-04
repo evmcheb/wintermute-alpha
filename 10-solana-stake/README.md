@@ -104,6 +104,7 @@ So, I made the following assumptions which I believe would be more robust:
 - All sandwiches involve buying and selling the token in the same slot
 - In between the buy and sell txn, there will be another buy of the same token from the victim (we ignore reverse sandwiches)
 - Multiple transactions may be sandwiched in the same block
+- The malicious buy and sell transaction are made from the same associated token account. 
 
 I wrote a Rust binary program that takes a block slot and returns the transactions that are part of a sandwich. It supports the Raydium AMM and includes swaps that don't directly call the Raydium contract (i.e. through the Jupiter aggregator). It supports V0 transactions and Address Lookup Table accounts.
 
