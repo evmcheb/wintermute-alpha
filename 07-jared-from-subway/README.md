@@ -11,7 +11,6 @@ I used the approach of aggregating incoming and outgoing WETH transfers for each
 then finding the delta to get the net WETH revenue. Aggregating transfers per block before summation is necessary as Jared can make multiple trades per block.
 
 The query returns a total of `86224.16` WETH.
-At an avg price of $3000 ETH this is $260mm USD in revenue.
 
 - b) Produce the code to calculate Jared’s costs and use this to:
     - Compute their profit.
