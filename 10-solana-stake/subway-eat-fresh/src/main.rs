@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use anyhow::Result;
 use solana_client::{rpc_client::RpcClient, rpc_config::RpcBlockConfig};
-use solana_sdk::{address_lookup_table::state::AddressLookupTable, bs58};
+use solana_sdk::bs58;
 use solana_transaction_status::{
     EncodedTransaction, TransactionDetails, UiAddressTableLookup, UiCompiledInstruction,
     UiInstruction, UiLoadedAddresses, UiMessage, UiTransactionEncoding,
@@ -109,9 +109,10 @@ fn find_account_helper(
         }
     }
     // Then get the address (this shouldn't fail)
-    accounts.get(index).cloned().unwrap_or_else(|| {
-        panic!("Account address not found at index {}", index)
-    })
+    accounts
+        .get(index)
+        .cloned()
+        .unwrap_or_else(|| panic!("Account address not found at index {}", index))
 }
 
 // Parse Raydium swap instruction data
@@ -223,12 +224,10 @@ fn main() -> Result<()> {
                             let program_account =
                                 find_account(instruction.program_id_index as usize);
                             if program_account == RAYDIUM_LIQUIDITY_POOL_V4 {
-                                let pool_address = find_account(
-                                    instruction.accounts[RAYDIUM_SWAP_POOL] as usize,
-                                );
-                                let source_ta = find_account(
-                                    instruction.accounts[RAYDIUM_USER_TA] as usize,
-                                );
+                                let pool_address =
+                                    find_account(instruction.accounts[RAYDIUM_SWAP_POOL] as usize);
+                                let source_ta =
+                                    find_account(instruction.accounts[RAYDIUM_USER_TA] as usize);
                                 let destination_ta = find_account(
                                     instruction.accounts[RAYDIUM_USER_DESTINATION_TA] as usize,
                                 );
@@ -250,13 +249,12 @@ fn main() -> Result<()> {
                                     find_account(inner_txn.program_id_index as usize);
                                 if program_account == RAYDIUM_LIQUIDITY_POOL_V4 {
                                     let pool_address = find_account(
-                                        inner_txn.accounts[RAYDIUM_SWAP_POOL] as usize
+                                        inner_txn.accounts[RAYDIUM_SWAP_POOL] as usize,
                                     );
-                                    let source_ta = find_account(
-                                        inner_txn.accounts[RAYDIUM_USER_TA] as usize
-                                    );
+                                    let source_ta =
+                                        find_account(inner_txn.accounts[RAYDIUM_USER_TA] as usize);
                                     let destination_ta = find_account(
-                                        inner_txn.accounts[RAYDIUM_USER_DESTINATION_TA] as usize
+                                        inner_txn.accounts[RAYDIUM_USER_DESTINATION_TA] as usize,
                                     );
                                     if let Some(swap) = parse_raydium_swap(
                                         signature.to_string(),
@@ -266,10 +264,7 @@ fn main() -> Result<()> {
                                         destination_ta,
                                     )? {
                                         let pool_address = swap.swap_pool.clone();
-                                        pools
-                                            .entry(pool_address)
-                                            .or_insert(Vec::new())
-                                            .push(swap);
+                                        pools.entry(pool_address).or_insert(Vec::new()).push(swap);
                                     }
                                 }
                             }

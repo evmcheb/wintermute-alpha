@@ -28,12 +28,16 @@ interface UniswapV2Router {
 interface IWETH {
     function withdraw(uint256 amount) external;
 }
+interface UniswapV2Pair {
+    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
+}
 
 contract StaleAmmArb is Test {
     IERC20 WETH = IERC20(address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2));
     IERC20 TUSD = IERC20(address(0x0000000000085d4780B73119b644AE5ecd22b376));
     UniswapV1Pair pair = UniswapV1Pair(address(0x4F30E682D0541eAC91748bd38A648d759261b8f3));
     UniswapV2Router router = UniswapV2Router(address(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D));
+    UniswapV2Pair v2pair = UniswapV2Pair(address(0xb4d0d9df2738abE81b87b66c80851292492D1404));
 
     receive() external payable {}
 
@@ -46,8 +50,8 @@ contract StaleAmmArb is Test {
     }
 
     function testArb() public {
-        console.log("Our TUSD balance before", TUSD.balanceOf(address(this)));
-        console.log("Our WETH balance before", WETH.balanceOf(address(this)));
+        emit log_named_decimal_uint("Our TUSD balance before", TUSD.balanceOf(address(this)), 18);
+        emit log_named_decimal_uint("Our WETH balance before", WETH.balanceOf(address(this)), 18);
         address[] memory path = new address[](2);
         path[0] = address(TUSD);
         path[1] = address(WETH);
@@ -58,9 +62,10 @@ contract StaleAmmArb is Test {
 
         uint256[] memory amounts =
             router.swapExactTokensForTokens(amountIn, amountOutMin, path, address(this), deadline);
-        console.log("Our TUSD balance after", TUSD.balanceOf(address(this)));
-        console.log("Our WETH balance after", WETH.balanceOf(address(this)));
-        console.log("Amounts", amounts[0], amounts[1]);
+        emit log_named_decimal_uint("Our TUSD balance after leg 1", TUSD.balanceOf(address(this)), 18);
+        emit log_named_decimal_uint("Our WETH balance after leg 1", WETH.balanceOf(address(this)), 18);
+        emit log_named_decimal_uint("Amount TUSD", amounts[0], 18);
+        emit log_named_decimal_uint("Amount WETH", amounts[1], 18);
 
         // Go sell on the univ1
         uint256 eth_bought = amounts[1];
@@ -69,7 +74,7 @@ contract StaleAmmArb is Test {
         pair.ethToTokenSwapInput{value: eth_bought}(1, deadline);
 
         // Check our TUSD balance
-        console.log("Our TUSD balance after", TUSD.balanceOf(address(this)));
-        console.log("Our WETH balance after", WETH.balanceOf(address(this)));
+        emit log_named_decimal_uint("Our TUSD balance after leg 2", TUSD.balanceOf(address(this)), 18);
+        emit log_named_decimal_uint("Our WETH balance after leg 2", WETH.balanceOf(address(this)), 18);
     }
 }

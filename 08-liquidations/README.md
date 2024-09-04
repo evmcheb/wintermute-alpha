@@ -1,28 +1,28 @@
 # Liquidations - Tier 3
 It’s DeFi Summer, and you run one of the most successful liquidators on Compound v2. On August 20, 2020, you realize that you are losing market share to [this address](https://etherscan.io/tx/0xec4f2ab36afa4fac4ba79b1ca67165c61c62c3bb6a18271c18f42a6bdfdb533d). This is odd because you updated the trading setup after [this proposal](https://compound.finance/governance/proposals/19), and have consistently won almost all liquidations since then.
 
-Price oracle
-https://etherscan.io/address/0x9b8eb8b3d6e2e0db36f41455185fef7049a35cae
-
-Block = 10695007
-
 - a) What’s the edge of this liquidator that allows them to win more liquidations?
-https://dune.com/queries/4027546/6779679/97103120-7cf9-4533-8d50-dbbe3cc4e182
-We can see that 0xb1340b0ce8af2def925c39cad3058167a0f36953
-and 0x7b2ef92fdecdf4a156365eb78c9e92b44588fe84
+
+Here is a dune dashboard by @jsharples with Compound liquidations, modifier to show liquidations before and after the proposal. https://dune.com/queries/4027546/6779679/97103120-7cf9-4533-8d50-dbbe3cc4e18
+
+We can see that `0xb1340b0ce8af2def925c39cad3058167a0f36953`
+and `0x7b2ef92fdecdf4a156365eb78c9e92b44588fe84`
 were consistently winning liquidations until August 20. 
 
-Neither of these addresses are including the signed oracle prices in their liquidations, instead relying on passive price oracle updates. By updating the price oracle when the accounts become insolvent, 0x888 can win more liquidations. 
+Neither of these addresses are including the signed oracle prices in their liquidations, instead relying on passive price oracle updates. By updating the price oracle as soon as it would make the accounts insolvent `0x888` can win more liquidations. 
 
-They also burn gas tokens which neither address does, meaning they are able to trigger the liquidation earlier. 
+`0x888` also burn gas tokens which neither address does, meaning they are able to trigger the liquidation earlier. 
 
 - b) When you figure out the source of the edge, you notice that their calldata is extremely obfuscated. Can you explain on how the calldata works?
 
-Used dedaub to decompile the contracts.
+I used dedaub to decompile the contracts.
+
 https://app.dedaub.com/decompile?md5=d3435ba0e835f556b073b7642d44c421
 
-entry point is 0x3743cb3f. The function takes 3 uint256 and 2 bytes arrays as arguments.
+The decompiled contract is [here](./0x88886841cfccbf54adbbc0b6c9cbaceabec42b8b.sol)
 
+Here's a summary of the calldata:
+```
 0x3743cb3f -> Function selector
 6afae95100000000000000000000000000000000000000000000000000000034 32 -> End bytes are bitflags
 0000000000000000000000000000000000000000000000000000000000000000 64 -> Expiry timestamp.
@@ -36,29 +36,32 @@ entry point is 0x3743cb3f. The function takes 3 uint256 and 2 bytes arrays as ar
 ...
 77700729a07151840a456a010a9e53830cfa4f8d0a456a2081f0da19f7360909
 fff86f6c00000000000000000000000000000000000000000000000000000000
+```
 
-function 0x3743cb3f(uint256 varg0, uint256 varg1, address varg2, bytes varg3, bytes varg4) public payable;
-This function does some validation on the arguments such as the size of the total calldata as well as the length of the bytes arrays.
+`function 0x3743cb3f(uint256 varg0, uint256 varg1, address varg2, bytes varg3, bytes varg4) public payable;`
 
-The function then calls 0x577(bytes bvarg4, bytes bvarg3, uint256 varg2, uint256 varg1, uint256 varg0).
-note the order of the arguments has been reversed.
+This function is responsible for validation on the arguments such as the size of the total calldata as well as the length of the bytes arrays.
 
-varg0  are bitflags that control which logic gets activated.
+The function then calls `0x577(bytes bvarg4, bytes bvarg3, uint256 varg2, uint256 varg1, uint256 varg0).`
 
-varg1 (slot1) is used as an expiry timestamp, unless it is 0 in which case the timestamp is not checked.
-0x3 && 0x4 - decrypt bvarg3 in memory (not used in this txn)
-!0x1 && 0x2 - do some struct initialization with bvarg3
-0x8 - complex revert mechanism if map_0[keccak256('attempt/abort') ^ varg0 >> 192] is true
-0x10 - decrypt varg4 in memory using a rotating XOR key. The decryption algo has been outlined in decode.py
+`varg0` contains bitflags that control which logic gets activated.
 
-varg2 is the encrypted address of the current implementation contract [0x15135a5aac54aa5935f6254377d43750de2b8136]. 
+`varg1`  is used as an expiry timestamp, unless it is 0 in which case the timestamp is not checked. I identified some of the bitflags:
+- `0x3 && 0x4` - decrypt bvarg3 in memory (not used in this txn)
+- `!0x1 && 0x2` - do some struct initialization with bvarg3
+- `0x8` - complex revert mechanism if `map_0[keccak256('attempt/abort') ^ varg0 >> 192] is true`
+- `0x10` - decrypt `varg4` in memory using a rotating XOR key.
+
+`varg2` is the encrypted address of the current implementation contract `0x15135a5aac54aa5935f6254377d43750de2b8136`. It is decrypted by xoring with address(this). I also decompiled this using dedaub:
+
 https://app.dedaub.com/decompile?md5=e513bbe1538e3f620f067b05d0219fd4
-It is decrypted by xoring with address(this).
+
+`varg4` is an important parameter as it contains the encrypted signatures from Coinbase. I have reversed the decryption algo in Python: [decode.py](./decode.py).
+The algorithm uses the address of the implementation contract and `address(this)` to initialize an XOR key. The XOR key is rotated for each 256bit word of the encrypted calldata. 
 
 Once the encrypted calldata has been decoded, it delegatecalls the implementation contract.
 
-The structure of the decrypted calldata using decode.py: 
-python decode.py
+```
 0x389eee82
 0000000000000000000000005d3a536e4d6dbd6114cc1ead35777bab948e3643 -> cToken Liquidator Repay (cDAI)
 0000000000000000000000004ddc2d193948926d02f9b1fe9e1daa0718270ed5 -> cToken Liquidation (cETH)
@@ -119,9 +122,31 @@ fa8211125a669ec79f429a412aca359e411866c4bd35d7ab0bdb774958572632 -> Coinbase Sig
 0000000000000000000000000000000000000000000000000000000000000003
 4441490000000000000000000000000000000000000000000000000000000000 -> "DAI"
 
+```
+
 The decoded calldata contains price data and signatures from 
+
 https://docs.cdp.coinbase.com/exchange/reference/exchangerestapi_getcoinbasepriceoracle
 
-varg3 of the decoded calldata acts as a bitflag to decide the exact logic flow, but eventually the contract will postPrice to the oracle then call liquidateBorrow on the borrower. 
+`varg3` of the decoded calldata acts as a bitflag to decide the exact logic flow. The source code gets too obfuscated after this for me to decipher but it appears to be performing struct initialization from the decrypted calldata. 
+
+Essentially the function `0x389eee82` calls `postPrice` to update the price oracle, then calls `0x8f1` calls `0x1cab` which calls `liquidateBorrow` on the cToken specified in `varg0` and `varg1`
 
 - c) Write code for the bot in Solidity, and provide all necessary information to simulate this liquidation on a mainnet fork.
+
+I wrote the bot as a contract [08-liquidation.sol](./08-liquidation.sol) and a test script to call the contract [../test/08-liquidation.sol](../test/08-liquidation.sol)
+
+`
+forge test --match-path test/08-liquidate.sol -vvv --rpc-url https://eth.merkle.io --fork-block-number 10692539
+`
+
+```
+[PASS] testLiquidation() (gas: 696552)
+Logs:
+  cETH balance before: 0.00000000
+  DAI balance before: 100000.000000000000000000
+  cETH balance after: 0.000000072662260919
+  DAI balance after: 94683.813754024685207417
+  we made (cETH): 726.62260919
+  we paid (DAI): 5316.186245975314792583
+```

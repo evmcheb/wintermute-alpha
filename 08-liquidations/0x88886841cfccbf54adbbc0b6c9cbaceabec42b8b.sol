@@ -7,6 +7,148 @@
 mapping (uint256 => uint256) map_0; // STORAGE[0x0]
 mapping (uint256 => uint256) _wards; // STORAGE[0x1]
 
+// LIQUIDATION FUNCTION OF INTEREST
+function 0x3743cb3f(uint256 varg0, uint256 varg1, address varg2, bytes varg3, bytes varg4) public payable { 
+    // Performs validaton checks on the calldata
+    require(msg.data.length - 4 >= 160);
+    0x1efe(varg0);
+    0x1efe(varg1);
+    0x1ee1(varg2);
+    require(varg3 <= uint64.max);
+    require(4 + varg3 + 31 < msg.data.length);
+    require(varg3.length <= uint64.max);
+    v0 = new bytes[](varg3.length);
+    require(!((v0 + ((~0x1f & 31 + varg3.length) + 32) > uint64.max) | (v0 + ((~0x1f & 31 + varg3.length) + 32) < v0)));
+    require(varg3.data + varg3.length <= msg.data.length);
+    CALLDATACOPY(v0.data, varg3.data, varg3.length);
+    v0[varg3.length] = 0;
+    require(varg4 <= uint64.max);
+    require(4 + varg4 + 31 < msg.data.length);
+    require(varg4.length <= uint64.max);
+    v1 = new bytes[](varg4.length);
+    require(!((v1 + ((~0x1f & 31 + varg4.length) + 32) > uint64.max) | (v1 + ((~0x1f & 31 + varg4.length) + 32) < v1)));
+    require(varg4.data + varg4.length <= msg.data.length);
+    CALLDATACOPY(v1.data, varg4.data, varg4.length);
+    v1[varg4.length] = 0;
+    // Call into the function below once the checks have passed
+    v2 = 0x577(v1, v0, varg2, varg1, varg0);
+    v3 = new uint256[](MEM[v2]);
+    v4 = v5 = 0;
+    while (v4 < MEM[v2]) {
+        MEM[v4 + v3.data] = MEM[v2 + 32 + v4];
+        v4 += 32;
+    }
+    if (v4 > MEM[v2]) {
+        MEM[MEM[v2] + v3.data] = 0;
+    }
+    return v3;
+}
+
+// varg1 == timestamp
+function 0x577(bytes bvarg4, bytes bvarg3, uint256 varg2, uint256 varg1, uint256 varg0) private { 
+    require(1 == _wards[msg.sender], Error(0x61757468));
+    v0 = v1 = !varg1;
+    if (varg1) {
+        v0 = v2 = block.timestamp < varg1;
+    }
+    if (!v0) {
+        return 96;
+    } else {
+        if (varg0 & 0x3) {
+            if (varg0 & 0x4) {
+                v3 = v4 = address(this) ^ bytes20(this << 96);
+                assert(32);
+                v5 = v6 = 0;
+                while (v5 < bvarg3.length >> 5) {
+                    v3 += v4;
+                    MEM[bvarg3 + (v5 + 1 << 5)] = v3 ^ MEM[(v5 + 1 << 5) + varg1];
+                    v5 += 1;
+                }
+                assert(32);
+                if (bvarg3.length % 32) {
+                    MEM[bvarg3 + ((varg1.length >> 5) + 1 << 5)] = (v4 + v3 ^ MEM[((varg1.length >> 5) + 1 << 5) + varg1]) & ~0 << (32 - varg1.length % 32 << 3);
+                }
+            }
+            v7 = v8 = 0;
+            if (!(varg0 & 0x1)) {
+                if (varg0 & 0x2) {
+                    require(bvarg3.data + varg1.length - varg1.data >= 32);
+                    require(MEM[bvarg3.data] <= uint64.max);
+                    require(bvarg3.data + MEM[varg1.data] + 31 < varg1.data + varg1.length);
+                    require(bvarg3[MEM[varg1.data]] <= uint64.max);
+                    v9 = new uint256[](bvarg3[MEM[varg1.data]]);
+                    require(!((v9 + ((bvarg3[MEM[varg1.data]] << 5) + 32) > uint64.max) | (v9 + ((varg1[MEM[varg1.data]] << 5) + 32) < v9)));
+                    v10 = v11 = bvarg3.data + MEM[varg1.data] + 32;
+                    v12 = v13 = v9.data;
+                    require(v11 + (bvarg3[MEM[varg1.data]] << 6) <= varg1.data + varg1.length);
+                    v14 = v15 = 0;
+                    while (v14 < bvarg3[MEM[varg1.data]]) {
+                        v16 = 0x14d0(v10, bvarg3.data + varg1.length);
+                        MEM[v12] = v16;
+                        v12 = v12 + 32;
+                        v10 += 64;
+                        v14 += 1;
+                    }
+                    v7 = v17 = 0xdd1(v9);
+                }
+            } else {
+                MEM[MEM[64]] = 0;
+                MEM[MEM[64] + 32] = 0;
+                require(bvarg3.data + varg1.length - varg1.data >= 64);
+                v18 = 0x14d0(bvarg3.data, varg1.data + varg1.length);
+                v19 = 0xd89(v18);
+                v7 = v20 = 0 != int8(v19);
+            }
+            if (!v7) {
+                return 96;
+            }
+        }
+        if (varg0 & 0x8) {
+            if (map_0[keccak256('attempt/abort') ^ varg0 >> 192]) {
+                return 96;
+            }
+        }
+        // Decrypt the calldata..?
+        if (varg0 & 0x10) {
+            // This == 0x88886841CfCCBf54AdBbC0B6C9cBAceAbec42b8B
+            varg2 = v21 = this ^ varg2;
+            // Varg2 == 0x15135a5aac54aa5935f6254377d43750de2b8136
+            v22 = v23 = address(this) ^ bytes20(this << 96);
+            assert(32);
+            slotN = v25 = 0;
+            // Iterate over the slots
+            while (slotN < bvarg4.length >> 5) {
+                v22 += v23;
+                MEM[bvarg4 + (slotN + 1 << 5)] = v22 ^ MEM[(slotN + 1 << 5) + bvarg4];
+                slotN += 1;
+            }
+            assert(32);
+            if (bvarg4.length % 32) {
+                MEM[bvarg4 + ((bvarg4.length >> 5) + 1 << 5)] = (v23 + v22 ^ MEM[((bvarg4.length >> 5) + 1 << 5) + bvarg4]) & ~0 << (32 - bvarg4.length % 32 << 3);
+            }
+        }
+        require(address(varg2), Error(0x7a65726f));
+        v26 = v27 = 0;
+        while (v26 < bvarg4.length) {
+            MEM[v26 + v28.data] = bvarg4[v26];
+            v26 += 32;
+        }
+        if (v26 > bvarg4.length) {
+            MEM[bvarg4.length + v28.data] = 0;
+        }
+        // Calls contract2.sol
+        v29, /* uint256 */ v30 = address(varg2).delegatecall(v28.data).gas(msg.gas);
+        if (RETURNDATASIZE() == 0) {
+            v31 = v32 = 96;
+        } else {
+            v31 = v33 = new bytes[](RETURNDATASIZE());
+            v30 = v33.data;
+            RETURNDATACOPY(v30, 0, RETURNDATASIZE());
+        }
+        burnGasToken(msg.gas, varg0);
+        return v31;
+    }
+}
 
 
 function 0x14d0(uint256 varg0, uint256 varg1) private { 
@@ -137,145 +279,6 @@ function 0x300f8970(address varg0, bytes varg1) public payable {
     return v10;
 }
 
-function 0x3743cb3f(uint256 varg0, uint256 varg1, address varg2, bytes varg3, bytes varg4) public payable { 
-    require(msg.data.length - 4 >= 160);
-    0x1efe(varg0);
-    0x1efe(varg1);
-    0x1ee1(varg2);
-    require(varg3 <= uint64.max);
-    require(4 + varg3 + 31 < msg.data.length);
-    require(varg3.length <= uint64.max);
-    v0 = new bytes[](varg3.length);
-    require(!((v0 + ((~0x1f & 31 + varg3.length) + 32) > uint64.max) | (v0 + ((~0x1f & 31 + varg3.length) + 32) < v0)));
-    require(varg3.data + varg3.length <= msg.data.length);
-    CALLDATACOPY(v0.data, varg3.data, varg3.length);
-    v0[varg3.length] = 0;
-    require(varg4 <= uint64.max);
-    require(4 + varg4 + 31 < msg.data.length);
-    require(varg4.length <= uint64.max);
-    v1 = new bytes[](varg4.length);
-    require(!((v1 + ((~0x1f & 31 + varg4.length) + 32) > uint64.max) | (v1 + ((~0x1f & 31 + varg4.length) + 32) < v1)));
-    require(varg4.data + varg4.length <= msg.data.length);
-    CALLDATACOPY(v1.data, varg4.data, varg4.length);
-    v1[varg4.length] = 0;
-    v2 = 0x577(v1, v0, varg2, varg1, varg0);
-    v3 = new uint256[](MEM[v2]);
-    v4 = v5 = 0;
-    while (v4 < MEM[v2]) {
-        MEM[v4 + v3.data] = MEM[v2 + 32 + v4];
-        v4 += 32;
-    }
-    if (v4 > MEM[v2]) {
-        MEM[MEM[v2] + v3.data] = 0;
-    }
-    return v3;
-}
-
-// varg1 == timestamp
-function 0x577(bytes bvarg4, bytes bvarg3, uint256 varg2, uint256 varg1, uint256 varg0) private { 
-    require(1 == _wards[msg.sender], Error(0x61757468));
-    v0 = v1 = !varg1;
-    if (varg1) {
-        v0 = v2 = block.timestamp < varg1;
-    }
-    if (!v0) {
-        return 96;
-    } else {
-        if (varg0 & 0x3) {
-            if (varg0 & 0x4) {
-                v3 = v4 = address(this) ^ bytes20(this << 96);
-                assert(32);
-                v5 = v6 = 0;
-                while (v5 < bvarg3.length >> 5) {
-                    v3 += v4;
-                    MEM[bvarg3 + (v5 + 1 << 5)] = v3 ^ MEM[(v5 + 1 << 5) + varg1];
-                    v5 += 1;
-                }
-                assert(32);
-                if (bvarg3.length % 32) {
-                    MEM[bvarg3 + ((varg1.length >> 5) + 1 << 5)] = (v4 + v3 ^ MEM[((varg1.length >> 5) + 1 << 5) + varg1]) & ~0 << (32 - varg1.length % 32 << 3);
-                }
-            }
-            v7 = v8 = 0;
-            if (!(varg0 & 0x1)) {
-                if (varg0 & 0x2) {
-                    require(bvarg3.data + varg1.length - varg1.data >= 32);
-                    require(MEM[bvarg3.data] <= uint64.max);
-                    require(bvarg3.data + MEM[varg1.data] + 31 < varg1.data + varg1.length);
-                    require(bvarg3[MEM[varg1.data]] <= uint64.max);
-                    v9 = new uint256[](bvarg3[MEM[varg1.data]]);
-                    require(!((v9 + ((bvarg3[MEM[varg1.data]] << 5) + 32) > uint64.max) | (v9 + ((varg1[MEM[varg1.data]] << 5) + 32) < v9)));
-                    v10 = v11 = bvarg3.data + MEM[varg1.data] + 32;
-                    v12 = v13 = v9.data;
-                    require(v11 + (bvarg3[MEM[varg1.data]] << 6) <= varg1.data + varg1.length);
-                    v14 = v15 = 0;
-                    while (v14 < bvarg3[MEM[varg1.data]]) {
-                        v16 = 0x14d0(v10, bvarg3.data + varg1.length);
-                        MEM[v12] = v16;
-                        v12 = v12 + 32;
-                        v10 += 64;
-                        v14 += 1;
-                    }
-                    v7 = v17 = 0xdd1(v9);
-                }
-            } else {
-                MEM[MEM[64]] = 0;
-                MEM[MEM[64] + 32] = 0;
-                require(bvarg3.data + varg1.length - varg1.data >= 64);
-                v18 = 0x14d0(bvarg3.data, varg1.data + varg1.length);
-                v19 = 0xd89(v18);
-                v7 = v20 = 0 != int8(v19);
-            }
-            if (!v7) {
-                return 96;
-            }
-        }
-        if (varg0 & 0x8) {
-            if (map_0[keccak256('attempt/abort') ^ varg0 >> 192]) {
-                return 96;
-            }
-        }
-        // Decrypt the calldata..?
-        if (varg0 & 0x10) {
-            // This == 0x88886841CfCCBf54AdBbC0B6C9cBAceAbec42b8B
-            varg2 = v21 = this ^ varg2;
-            // Varg2 == 0x15135a5aac54aa5935f6254377d43750de2b8136
-            v22 = v23 = address(this) ^ bytes20(this << 96);
-            assert(32);
-            slotN = v25 = 0;
-            // Iterate over the slots
-            while (slotN < bvarg4.length >> 5) {
-                v22 += v23;
-                MEM[bvarg4 + (slotN + 1 << 5)] = v22 ^ MEM[(slotN + 1 << 5) + bvarg4];
-                slotN += 1;
-            }
-            assert(32);
-            if (bvarg4.length % 32) {
-                MEM[bvarg4 + ((bvarg4.length >> 5) + 1 << 5)] = (v23 + v22 ^ MEM[((bvarg4.length >> 5) + 1 << 5) + bvarg4]) & ~0 << (32 - bvarg4.length % 32 << 3);
-            }
-        }
-        require(address(varg2), Error(0x7a65726f));
-        v26 = v27 = 0;
-        while (v26 < bvarg4.length) {
-            MEM[v26 + v28.data] = bvarg4[v26];
-            v26 += 32;
-        }
-        if (v26 > bvarg4.length) {
-            MEM[bvarg4.length + v28.data] = 0;
-        }
-        // Calls contract2.sol
-        v29, /* uint256 */ v30 = address(varg2).delegatecall(v28.data).gas(msg.gas);
-        if (RETURNDATASIZE() == 0) {
-            v31 = v32 = 96;
-        } else {
-            v31 = v33 = new bytes[](RETURNDATASIZE());
-            v30 = v33.data;
-            RETURNDATACOPY(v30, 0, RETURNDATASIZE());
-        }
-        burnGasToken(msg.gas, varg0);
-        return v31;
-    }
-}
 
 function 0x1ee1(address varg0) private { 
     return ;

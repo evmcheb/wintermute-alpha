@@ -45,6 +45,29 @@ contract LongTail is Test, Structs {
         flashloan(WETH, amount, data);
     }
 
+    function testBackrunFullAmount() public {
+        uint256 amount = 27_000 ether;
+        // Flashloan 15,000 ETH
+        uint256 wethBalanceBefore = IERC20(WETH).balanceOf(address(this));
+        bytes memory data = abi.encode(WETH, amount, wethBalanceBefore);
+        flashloan(WETH, amount, data);
+    }
+
+    function testFindOptimalAmount() public {
+        uint256 amount = 10_000 ether;
+        // Flashloan 15,000 ETH
+        for (uint256 i = 0; i < 10; i++) {
+            // Rollback state to before the flashloan
+            vm.rollFork(12473575);
+            setUp();
+            amount = amount + 1000 ether;
+            emit log_named_uint("TEST AMOUNT: ", amount);
+            uint256 wethBalanceBefore = IERC20(WETH).balanceOf(address(this));
+            bytes memory data = abi.encode(WETH, amount, wethBalanceBefore);
+            flashloan(WETH, amount, data);
+        }
+    }
+
     function callFunction(
         address, /* sender */
         Info calldata, /* accountInfo */

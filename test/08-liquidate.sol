@@ -32,10 +32,14 @@ contract TestLiquidation is Test {
 
         uint256 liquidatorBalanceBefore = IERC20(cETH).balanceOf(address(liquidator));
         uint256 daiBalanceBefore = IERC20(DAI).balanceOf(address(liquidator));
+        emit log_named_decimal_uint("cETH balance before", liquidatorBalanceBefore, 8);
+        emit log_named_decimal_uint("DAI balance before", daiBalanceBefore, 18);
         liquidator.liquidate(borrower, cDAI, cETH, amount, messages, sigs, symbols);
         uint256 liquidatorBalanceAfter = IERC20(cETH).balanceOf(address(liquidator));
         uint256 daiBalanceAfter = IERC20(DAI).balanceOf(address(liquidator));
-        console.log("we made", liquidatorBalanceAfter - liquidatorBalanceBefore, "cETH");
-        console.log("we paid", daiBalanceBefore - daiBalanceAfter, "DAI");
+        emit log_named_decimal_uint("cETH balance after", liquidatorBalanceAfter, 18);
+        emit log_named_decimal_uint("DAI balance after", daiBalanceAfter, 18);
+        emit log_named_decimal_uint("we made (cETH)", liquidatorBalanceAfter - liquidatorBalanceBefore, 8);
+        emit log_named_decimal_uint("we paid (DAI)", daiBalanceBefore - daiBalanceAfter, 18);
     }
 }

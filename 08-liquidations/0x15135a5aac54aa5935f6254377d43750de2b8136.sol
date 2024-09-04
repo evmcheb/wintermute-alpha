@@ -6,589 +6,9 @@
 // Data structures and variables inferred from the use of storage instructions
 mapping (uint256 => uint256) map_0; // STORAGE[0x0]
 
+// FUNCTION CALLED BY 0x88886841cfccbf54adbbc0b6c9cbaceabec42b8b
 
-
-function 0x1069(uint256 varg0) private { 
-    v0 = v1 = 0;
-    while (v0 < varg0.length) {
-        assert(v0 < varg0.length);
-        if ((address(MEM[varg0[v0]])).balance != MEM[varg0[v0] + 32]) {
-            if ((address(MEM[varg0[v0]])).balance >= MEM[32 + varg0[v0]]) {
-                v2 = v3 = 1;
-            } else {
-                v2 = v4 = uint256.max;
-            }
-        } else {
-            v2 = 0;
-        }
-        if (!int8(v2)) {
-            v0 += 1;
-        } else {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-function 0x10a8(uint256 varg0) private { 
-    if (varg0.length) {
-        v0 = v1 = 0;
-        while (v0 < varg0.length) {
-            assert(v0 < varg0.length);
-            if (MEM[varg0[v0]] >> 248 != 1) {
-                if (2 != uint8(MEM[varg0[v0]] >> 248)) {
-                    if (3 != uint8(MEM[varg0[v0]] >> 248)) {
-                        v2 = v3 = 0;
-                    } else {
-                        if (!address(0x0)) {
-                            require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
-                            v4 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).oracle().gas(msg.gas);
-                            if (bool(v4)) {
-                                require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-                                require(MEM[MEM[64]] == address(MEM[MEM[64]]));
-                                MEM[MEM[64]] = address(MEM[MEM[64]]);
-                            } else {
-                                RETURNDATACOPY(0, 0, RETURNDATASIZE());
-                                revert(0, RETURNDATASIZE());
-                            }
-                        }
-                        MEM[MEM[64]] = 0xfc57d4df00000000000000000000000000000000000000000000000000000000;
-                        v5 = v6 = address(MEM[MEM[64]]);
-                        v7 = 4 + MEM[64] + 32;
-                        MEM[4 + MEM[64]] = address(MEM[varg0[v0]]);
-                    }
-                } else {
-                    MEM[MEM[64]] = 0x5e9a523c00000000000000000000000000000000000000000000000000000000;
-                    v5 = v8 = 0x2557a5e05defeffd4cae6d83ea3d173b272c904;
-                    v7 = v9 = 4 + MEM[64] + 32;
-                    MEM[4 + MEM[64]] = address(MEM[varg0[v0]]);
-                }
-            } else {
-                MEM[MEM[64]] = 0x183f344400000000000000000000000000000000000000000000000000000000;
-                v5 = v10 = 0x2557a5e05defeffd4cae6d83ea3d173b272c904;
-                v7 = v11 = 4 + MEM[64] + 32;
-                MEM[4 + MEM[64]] = address(MEM[varg0[v0]]);
-            }
-            require(bool(v5.code.size));
-            v12 = v5.staticcall(MEM[MEM[64]:MEM[64] + v36d0V0x2042 - MEM[64]], MEM[MEM[64]:MEM[64] + 32]).gas(msg.gas);
-            if (bool(v12)) {
-                MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-                require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-                v2 = MEM[MEM[64]];
-            } else {
-                RETURNDATACOPY(0, 0, RETURNDATASIZE());
-                revert(0, RETURNDATASIZE());
-            }
-            v13 = v14 = bool(v2);
-            if (v2) {
-                assert(v0 < varg0.length);
-                v13 = v15 = v2 != MEM[32 + varg0[v0]];
-            }
-            if (!v13) {
-                v0 += 1;
-            } else {
-                return 1;
-            }
-        }
-    }
-    return 0;
-}
-
-function 0x1136(uint256 varg0, uint256 varg1) private { 
-    v0 = 0x209f();
-    if (block.timestamp - v0 < 300) {
-        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
-        v1, /* address */ v2 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).oracle().gas(msg.gas);
-        require(bool(v1), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        require(v2 == address(v2));
-        require(bool((address(v2)).code.size));
-        v3, /* uint256 */ v4 = address(v2).getUnderlyingPrice(address(varg1)).gas(msg.gas);
-        require(bool(v3), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        require(bool((address(v2)).code.size));
-        v5, /* uint256 */ v6 = address(v2).getUnderlyingPrice(address(varg0)).gas(msg.gas);
-        require(bool(v5), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        v7 = 0x20c7(varg1);
-        v8 = 0x20c7(varg0);
-        v9 = v10 = v4 > 0;
-        if (v10) {
-            v9 = v11 = v6 > 0;
-        }
-        if (v9) {
-            v9 = v12 = v7 > 0;
-        }
-        if (v9) {
-            v9 = v13 = v8 > 0;
-        }
-        if (v9) {
-            require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
-            v14, /* uint256 */ v15 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).liquidationIncentiveMantissa().gas(msg.gas);
-            require(bool(v14), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-            require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-            assert(v7);
-            assert(v8);
-            v16 = 0x2124(10 ** 18 * v6 / v8, 10 ** 18 * v4 / v7);
-            v17 = 0x2155(v16, v15);
-            emit 0xafd244987898fb4c002a301a9812580c6e446d5a70efce1be2b74a14f3524751(address(varg1), address(varg0), v4, v6, v7, v8, 10 ** 18 * v4 / v7, 10 ** 18 * v6 / v8, v17);
-            if (v17 < 0xe27c49886e60000) {
-                return 0;
-            }
-        }
-    }
-    return 1;
-}
-
-function 0x145b(address varg0) private { 
-    require(bool(varg0.code.size));
-    v0, /* uint256 */ v1 = varg0.accrualBlockNumber().gas(msg.gas);
-    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-    if (v1 == block.number) {
-        return ;
-    } else {
-        require(bool(varg0.code.size));
-        v2, /* uint256 */ v3 = varg0.accrueInterest().gas(msg.gas);
-        require(bool(v2), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        return ;
-    }
-}
-
-function 0x1548(address varg0) private { 
-    require(bool(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b.code.size));
-    v0, /* uint256 */ v1, /* uint256 */ v2, /* uint256 */ v3 = 0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b.getAccountLiquidity(varg0).gas(msg.gas);
-    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 96);
-    require(0 == v1, Error('bhnl:gal'));
-    v4 = v5 = !v2;
-    if (!bool(v2)) {
-        v4 = v6 = v3 > 0;
-    }
-    return v4;
-}
-
-function 0x1631(uint256 varg0, struct(3) varg1, address varg2, address varg3, uint256 varg4) private { 
-    v0 = v1 = 0;
-    v2 = 0xd5f(this, address(varg4));
-    v3 = v4 = varg1.word2 != uint256.max;
-    if (varg1.word2 != uint256.max) {
-        v3 = v5 = uint256.max != varg1.word0;
-    }
-    if (v3) {
-        v3 = v6 = varg1.word1 != uint256.max;
-    }
-    if (!v3) {
-        v7 = new struct(11);
-        v7.word0 = 0;
-        v7.word1 = 0;
-        v7.word2 = 0;
-        v7.word3 = 0;
-        v7.word4 = 0;
-        v7.word5 = 0;
-        v7.word6 = 0;
-        v7.word7 = 0;
-        v7.word8 = 0;
-        v7.word9 = 0;
-        v7.word10 = False;
-        require(bool((address(varg4)).code.size));
-        v8, /* uint256 */ v9 = address(varg4).borrowBalanceStored(varg2).gas(msg.gas);
-        require(bool(v8), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        v7.word0 = v9;
-        v7.word1 = v9 >> 1;
-        if (v9 >> 1) {
-            v10 = _SafeSub(1, v7.word1);
-            v7.word1 = v10;
-        }
-        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
-        v11, /* uint256 */ v12, /* uint256 */ v13 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).liquidateCalculateSeizeTokens(address(varg4), varg3, 10 ** 18).gas(msg.gas);
-        require(bool(v11), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 64);
-        v7.word2 = v13;
-        if (v13) {
-            require(bool(varg3.code.size));
-            v14, /* uint256 */ v15 = varg3.balanceOf(varg2).gas(msg.gas);
-            require(bool(v14), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-            MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-            require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-            v16 = 0x27f4(10 ** 18, v15);
-            require(v16 + (v7.word2 >> 1) >= v16, Error('ds-math-add-overflow'));
-            assert(v7.word2);
-            v7.word3 = (v16 + (v7.word2 >> 1)) / v7.word2;
-            if ((v16 + (v7.word2 >> 1)) / v7.word2) {
-                v17 = _SafeSub(1, v7.word3);
-                v7.word3 = v17;
-            }
-        }
-        v18 = 0xd48(v7.word3, v7.word1);
-        v19 = 0xd48(v18, varg1.word2);
-        v7.word4 = v19;
-        if (v2 < v19) {
-            v20 = _SafeSub(v2, v7.word4);
-            v7.word5 = v20;
-            if (v7.word4 / 20 < v20) {
-                if (uint256.max == varg1.word0) {
-                    require(bool((address(varg4)).code.size));
-                    v21, /* uint256 */ v22 = address(varg4).balanceOf(address(this)).gas(msg.gas);
-                    require(bool(v21), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-                    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-                    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-                    if (v22 >= 10) {
-                        v23, v24, v25, v26 = 0x217d(varg0, varg4, this);
-                        v7.word9 = v23;
-                        v7.word8 = v24;
-                        v7.word7 = v25;
-                        v7.word6 = v26;
-                        if (v7.word5 > v26) {
-                            v0 = v27 = 0xd48(v7.word7, v7.word5);
-                        }
-                        v7.word10 = 1;
-                    }
-                } else {
-                    v0 = v28 = 0xd48(varg1.word0, v7.word5);
-                }
-            }
-            v29 = _SafeSub(v0, v7.word5);
-            v7.word5 = v29;
-            if (v7.word4 / 20 < v29) {
-                if (varg1.word1 == uint256.max) {
-                    if (!v7.word10) {
-                        v30, v31, v32, v33 = 0x217d(varg0, varg4, this);
-                        v7.word9 = v30;
-                        v7.word8 = v31;
-                        v7.word7 = v32;
-                        v7.word6 = v33;
-                    }
-                    if (v0) {
-                        v0 = v34 = 0xd48(v7.word9, v7.word5);
-                    } else {
-                        v0 = v35 = 0xd48(v7.word8, v7.word5);
-                    }
-                } else {
-                    v0 = v36 = 0xd48(varg1.word1, v7.word5);
-                }
-            }
-            v37 = _SafeAdd(v0, v0);
-            v38 = v39 = _SafeAdd(v37, v2);
-        } else {
-            v38 = v40 = v7.word4;
-        }
-        require(v2 + v0 + v0 >= v38, Error(0x616d74));
-        emit 0x65d607271aa524614901583bb91888998ecd800163848cba0f012a3dd8029c5f(address(varg4), varg1.word0, varg1.word1, varg1.word2, v7.word0, v7.word1, v7.word3, v7.word7, v7.word8, v7.word9);
-        emit 0x8bb178c116f1adecd9ebf3df5d5120b833370f8832a8ca4931b0036b096375f5(v2, v0, v0, v38);
-    } else {
-        v0 = v41 = varg1.word1;
-        v0 = v42 = varg1.word0;
-        v38 = v43 = 0xd48(v2 + v41 + v42, varg1.word2);
-        require(bool((address(varg4)).code.size));
-        v44, /* uint256 */ v45 = address(varg4).borrowBalanceStored(varg2).gas(msg.gas);
-        require(bool(v44), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        assert(2);
-        v38 = v46 = v45 >> 1;
-        if (v43 > v46) {
-        }
-    }
-    return v38, v0, v0;
-}
-
-function 0x1c63(uint256 varg0, address varg1) private { 
-    require(bool(varg1.code.size));
-    v0, /* uint256 */ v1 = varg1.borrow(varg0).gas(msg.gas);
-    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-    return v1;
-}
-
-function 0x1cab(address varg0, uint256 varg1, address varg2, address varg3) private { 
-    if (0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5 != varg3) {
-        require(bool(varg3.code.size));
-        v0, /* uint256 */ v1 = varg3.liquidateBorrow(varg2, varg1, varg0).gas(msg.gas);
-        require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        return v1;
-    } else {
-        require(bool(varg3.code.size));
-        v2 = varg3.liquidateBorrow(varg2, varg0).value(varg1).gas(msg.gas);
-        require(bool(v2), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        return 0;
-    }
-}
-
-function 0x209f() private { 
-    return map_0[keccak256('cmp/time')];
-}
-
-function 0x20c7(address varg0) private { 
-    if (0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5 != varg0) {
-        return map_0[keccak256('cmp/mark') ^ varg0];
-    } else {
-        return 10 ** 18;
-    }
-}
-
-function 0x2124(uint256 varg0, uint256 varg1) private { 
-    v0 = 0x27f4(10 ** 18, varg1);
-    require(v0 + (varg0 >> 1) >= v0, Error('ds-math-add-overflow'));
-    assert(varg0);
-    return (v0 + (varg0 >> 1)) / varg0;
-}
-
-function 0x2140(uint256 varg0, uint256 varg1, uint256 varg2) private { 
-    v0 = varg2 + varg0 / varg1;
-    require(v0 >= varg2, Error('ds-math-add-overflow'));
-    return v0;
-}
-
-function 0x2155(uint256 varg0, uint256 varg1) private { 
-    v0 = 0x27f4(varg0, varg1);
-    v1 = 0x2140(10 ** 18, 2, v0);
-    assert(10 ** 18);
-    return v1 / 10 ** 18;
-}
-
-function 0x217d(uint256 varg0, address varg1, address varg2) private { 
-    if (varg0) {
-        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
-        v0, /* address */ v1 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).oracle().gas(msg.gas);
-        require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        require(v1 == address(v1));
-        v2 = new struct(22);
-        v2.word0 = 0;
-        v2.word1 = 0;
-        v2.word2 = 0;
-        v2.word3 = 0;
-        v2.word4 = False;
-        v2.word5 = 0;
-        v2.word6 = 0;
-        v2.word7 = 0;
-        v2.word8 = 0;
-        v2.word9 = 0;
-        v2.word10 = 0;
-        v2.word11 = 0;
-        v2.word12 = 0;
-        v2.word13 = 0;
-        v2.word14 = 0;
-        v2.word15 = 0;
-        v2.word16 = 0;
-        v2.word17 = 0;
-        v2.word18 = 0;
-        v2.word19 = 0;
-        v2.word20 = 0;
-        v2.word21 = 0;
-        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
-        v3, /* uint256 */ v4 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).getAssetsIn(varg2).gas(msg.gas);
-        require(bool(v3), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        RETURNDATACOPY(v4, 0, RETURNDATASIZE());
-        MEM[64] = v4 + (0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0 & RETURNDATASIZE() + 31);
-        require(v4 + RETURNDATASIZE() - v4 >= 32);
-        require(MEM[v4] <= uint64.max);
-        require(v4 + MEM[v4] + 31 < v4 + RETURNDATASIZE());
-        require(MEM[v4 + MEM[v4]] <= uint64.max);
-        v5 = new uint256[](MEM[v4 + MEM[v4]]);
-        require(!((v5 + ((MEM[v4 + MEM[v4]] << 5) + 32) < v5) | (v5 + ((MEM[v4 + MEM[v4]] << 5) + 32) > uint64.max)));
-        v6 = v7 = v4 + MEM[v4] + 32;
-        v8 = v9 = v5.data;
-        require(v7 + (MEM[v4 + MEM[v4]] << 5) <= v4 + RETURNDATASIZE());
-        v10 = v11 = 0;
-        while (v10 < MEM[v4 + MEM[v4]]) {
-            require(MEM[v6] == address(MEM[v6]));
-            MEM[v8] = MEM[v6];
-            v8 += 32;
-            v6 += 32;
-            v10 += 1;
-        }
-        v12 = v13 = 0;
-        while (v12 < v5.length) {
-            assert(v12 < v5.length);
-            require(bool((address(v5[v12])).code.size));
-            v14, /* uint256 */ v15, /* uint256 */ v16, /* uint256 */ v17, /* uint256 */ v18 = address(v5[v12]).getAccountSnapshot(varg2).gas(msg.gas);
-            require(bool(v14), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-            MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-            require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 128);
-            v2.word3 = v18;
-            v2.word2 = v17;
-            v2.word1 = v16;
-            v2.word0 = v15;
-            if (!v15) {
-                v19 = v20 = v2.word1 > 0;
-                if (v2.word1 <= 0) {
-                    v19 = v21 = v2.word2 > 0;
-                }
-                if (!v19) {
-                    v19 = v22 = address(v5[v12]) == varg1;
-                }
-                if (v19) {
-                    require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
-                    v23, /* bool */ v24, /* uint256 */ v25, /* bool */ v26 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).markets(address(v5[v12])).gas(msg.gas);
-                    require(bool(v23), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-                    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-                    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 96);
-                    require(v24 == bool(v24));
-                    require(v26 == bool(v26));
-                    v2.word5 = v25;
-                    v2.word4 = bool(v24);
-                    if (v24) {
-                        require(bool((address(v1)).code.size));
-                        v27, /* uint256 */ v28 = address(v1).getUnderlyingPrice(address(v5[v12])).gas(msg.gas);
-                        require(bool(v27), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-                        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-                        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-                        v2.word6 = v28;
-                        if (v28) {
-                            v29 = 0x2155(v2.word6, v2.word5);
-                            v2.word7 = v29;
-                            v30 = 0x2155(v2.word3, v29);
-                            v2.word8 = v30;
-                            v31 = 0x2155(v30, v2.word1);
-                            v32 = _SafeAdd(v31, v2.word9);
-                            v2.word9 = v32;
-                            v33 = 0x2155(v2.word6, v2.word2);
-                            v34 = _SafeAdd(v33, v2.word10);
-                            v2.word10 = v34;
-                            if (varg1 == address(v5[v12])) {
-                                v2.word11 = v2.word6;
-                                v2.word12 = v2.word7;
-                                v35 = 0x2155(v2.word8, v2.word1);
-                                v2.word13 = v35;
-                                v36 = 0x2155(v2.word3, v2.word1);
-                                v2.word14 = v36;
-                                v37 = 0x2155(v2.word3, 2);
-                                v2.word18 = v37;
-                            }
-                        }
-                    }
-                }
-                v12 += 1;
-            } else {
-                return 0, 0, 0, 0;
-            }
-        }
-        v38 = 0x2155(varg0, v2.word9);
-        v2.word16 = v38;
-        v39 = v40 = v2.word10 < v38;
-        if (v40) {
-            v39 = v41 = v2.word11 > 0;
-        }
-        if (v39) {
-            v42 = _SafeSub(v2.word10, v2.word16);
-            v2.word17 = v42;
-            v43 = 0x2124(v2.word11, v42);
-            v2.word20 = v43;
-            if (v2.word14 <= v2.word18) {
-                v2.word21 = v2.word20;
-            } else {
-                v44 = 0x2155(varg0, v2.word13);
-                v2.word15 = v44;
-                if (v2.word17 <= v44) {
-                    v45 = 0x2124(v2.word12, v2.word17);
-                    v2.word19 = v45;
-                    if (v2.word18 > v45) {
-                        v2.word19 = 0;
-                    }
-                } else {
-                    v2.word19 = v2.word14;
-                    v46 = _SafeSub(v2.word15, v2.word17);
-                    v47 = 0x2124(v2.word11, v46);
-                    v2.word21 = v47;
-                }
-            }
-        }
-        emit 0x759f59ae1c5f93b58757b8cbf263c6d5222b08ce3a3c5e9441d73c92fc0c3dc0(varg2, varg1, varg0, v2.word9, v2.word10, v2.word16, v2.word17, v2.word15, v2.word18, v2.word19, v2.word20, v2.word21);
-        return v2.word21, v2.word20, v2.word19, v2.word18;
-    } else {
-        return 0, 0, 0, 0;
-    }
-}
-
-function 0x268(uint256 varg0, address varg1) private { 
-    require(bool(varg1.code.size));
-    v0, /* uint256 */ v1 = varg1.borrowBalanceCurrent(address(this)).gas(msg.gas);
-    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-    if (v1) {
-        v2 = 0xca7(this, varg1);
-        if (v2) {
-            v3 = 0xd48(v1, v2);
-            v4 = 0xd48(v3, varg0);
-            if (v4) {
-                v5 = 0xd5f(this, varg1);
-                v6 = 0xe7c(v4, varg1);
-                require(!v6, Error(0x726564));
-                v7 = 0xd5f(this, varg1);
-                if (v7 <= v5) {
-                    return ;
-                } else {
-                    v8 = _SafeSub(v5, v7);
-                    v9 = 0xd48(v1, v8);
-                    v10 = 0xee7(v9, varg1);
-                    require(!v10, Error(0x726570));
-                    return ;
-                }
-            } else {
-                return ;
-            }
-        } else {
-            return ;
-        }
-    } else {
-        return ;
-    }
-}
-
-function _SafeAdd(uint256 varg0, uint256 varg1) private { 
-    require(varg1 + varg0 >= varg1, Error('ds-math-add-overflow'));
-    return varg1 + varg0;
-}
-
-function 0x27f4(uint256 varg0, uint256 varg1) private { 
-    v0 = v1 = 0;
-    v2 = v3 = !varg0;
-    if (varg0) {
-        v0 = v4 = varg1 * varg0;
-        assert(varg0);
-        v2 = v5 = v4 / varg0 == varg1;
-    }
-    require(v2, Error('ds-math-mul-overflow'));
-    return v0;
-}
-
-function 0x492(uint256 varg0, address varg1) private { 
-    require(bool(varg1.code.size));
-    v0, /* uint256 */ v1 = varg1.balanceOf(address(this)).gas(msg.gas);
-    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-    if (v1 <= varg0) {
-        return 0;
-    } else {
-        v2 = _SafeSub(varg0, v1);
-        require(bool(varg1.code.size));
-        v3, /* uint256 */ v4 = varg1.redeem(v2).gas(msg.gas);
-        require(bool(v3), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
-        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
-        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
-        return v4;
-    }
-}
-
-function function_selector() public payable { 
-    revert();
-}
-
-/* varg0 to varg10
+/* Calldata: varg0 to varg10
     0000000000000000000000005d3a536e4d6dbd6114cc1ead35777bab948e3643
     0000000000000000000000004ddc2d193948926d02f9b1fe9e1daa0718270ed5
     00000000000000000000000026db83c03f408135933b3cff8b7adc6a7e0adebc
@@ -955,6 +375,587 @@ function postPrices(uint256 varg0, uint256 varg1, uint256 varg2, uint256 varg3, 
         return 0;
     }
 }
+function 0x1cab(address varg0, uint256 varg1, address varg2, address varg3) private { 
+    if (0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5 != varg3) {
+        require(bool(varg3.code.size));
+        v0, /* uint256 */ v1 = varg3.liquidateBorrow(varg2, varg1, varg0).gas(msg.gas);
+        require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        return v1;
+    } else {
+        require(bool(varg3.code.size));
+        v2 = varg3.liquidateBorrow(varg2, varg0).value(varg1).gas(msg.gas);
+        require(bool(v2), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        return 0;
+    }
+}
+
+function 0x1069(uint256 varg0) private { 
+    v0 = v1 = 0;
+    while (v0 < varg0.length) {
+        assert(v0 < varg0.length);
+        if ((address(MEM[varg0[v0]])).balance != MEM[varg0[v0] + 32]) {
+            if ((address(MEM[varg0[v0]])).balance >= MEM[32 + varg0[v0]]) {
+                v2 = v3 = 1;
+            } else {
+                v2 = v4 = uint256.max;
+            }
+        } else {
+            v2 = 0;
+        }
+        if (!int8(v2)) {
+            v0 += 1;
+        } else {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+function 0x10a8(uint256 varg0) private { 
+    if (varg0.length) {
+        v0 = v1 = 0;
+        while (v0 < varg0.length) {
+            assert(v0 < varg0.length);
+            if (MEM[varg0[v0]] >> 248 != 1) {
+                if (2 != uint8(MEM[varg0[v0]] >> 248)) {
+                    if (3 != uint8(MEM[varg0[v0]] >> 248)) {
+                        v2 = v3 = 0;
+                    } else {
+                        if (!address(0x0)) {
+                            require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
+                            v4 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).oracle().gas(msg.gas);
+                            if (bool(v4)) {
+                                require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+                                require(MEM[MEM[64]] == address(MEM[MEM[64]]));
+                                MEM[MEM[64]] = address(MEM[MEM[64]]);
+                            } else {
+                                RETURNDATACOPY(0, 0, RETURNDATASIZE());
+                                revert(0, RETURNDATASIZE());
+                            }
+                        }
+                        MEM[MEM[64]] = 0xfc57d4df00000000000000000000000000000000000000000000000000000000;
+                        v5 = v6 = address(MEM[MEM[64]]);
+                        v7 = 4 + MEM[64] + 32;
+                        MEM[4 + MEM[64]] = address(MEM[varg0[v0]]);
+                    }
+                } else {
+                    MEM[MEM[64]] = 0x5e9a523c00000000000000000000000000000000000000000000000000000000;
+                    v5 = v8 = 0x2557a5e05defeffd4cae6d83ea3d173b272c904;
+                    v7 = v9 = 4 + MEM[64] + 32;
+                    MEM[4 + MEM[64]] = address(MEM[varg0[v0]]);
+                }
+            } else {
+                MEM[MEM[64]] = 0x183f344400000000000000000000000000000000000000000000000000000000;
+                v5 = v10 = 0x2557a5e05defeffd4cae6d83ea3d173b272c904;
+                v7 = v11 = 4 + MEM[64] + 32;
+                MEM[4 + MEM[64]] = address(MEM[varg0[v0]]);
+            }
+            require(bool(v5.code.size));
+            v12 = v5.staticcall(MEM[MEM[64]:MEM[64] + v36d0V0x2042 - MEM[64]], MEM[MEM[64]:MEM[64] + 32]).gas(msg.gas);
+            if (bool(v12)) {
+                MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+                require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+                v2 = MEM[MEM[64]];
+            } else {
+                RETURNDATACOPY(0, 0, RETURNDATASIZE());
+                revert(0, RETURNDATASIZE());
+            }
+            v13 = v14 = bool(v2);
+            if (v2) {
+                assert(v0 < varg0.length);
+                v13 = v15 = v2 != MEM[32 + varg0[v0]];
+            }
+            if (!v13) {
+                v0 += 1;
+            } else {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+function 0x1136(uint256 varg0, uint256 varg1) private { 
+    v0 = 0x209f();
+    if (block.timestamp - v0 < 300) {
+        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
+        v1, /* address */ v2 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).oracle().gas(msg.gas);
+        require(bool(v1), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        require(v2 == address(v2));
+        require(bool((address(v2)).code.size));
+        v3, /* uint256 */ v4 = address(v2).getUnderlyingPrice(address(varg1)).gas(msg.gas);
+        require(bool(v3), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        require(bool((address(v2)).code.size));
+        v5, /* uint256 */ v6 = address(v2).getUnderlyingPrice(address(varg0)).gas(msg.gas);
+        require(bool(v5), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        v7 = 0x20c7(varg1);
+        v8 = 0x20c7(varg0);
+        v9 = v10 = v4 > 0;
+        if (v10) {
+            v9 = v11 = v6 > 0;
+        }
+        if (v9) {
+            v9 = v12 = v7 > 0;
+        }
+        if (v9) {
+            v9 = v13 = v8 > 0;
+        }
+        if (v9) {
+            require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
+            v14, /* uint256 */ v15 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).liquidationIncentiveMantissa().gas(msg.gas);
+            require(bool(v14), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+            require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+            assert(v7);
+            assert(v8);
+            v16 = 0x2124(10 ** 18 * v6 / v8, 10 ** 18 * v4 / v7);
+            v17 = 0x2155(v16, v15);
+            emit 0xafd244987898fb4c002a301a9812580c6e446d5a70efce1be2b74a14f3524751(address(varg1), address(varg0), v4, v6, v7, v8, 10 ** 18 * v4 / v7, 10 ** 18 * v6 / v8, v17);
+            if (v17 < 0xe27c49886e60000) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+function 0x145b(address varg0) private { 
+    require(bool(varg0.code.size));
+    v0, /* uint256 */ v1 = varg0.accrualBlockNumber().gas(msg.gas);
+    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+    if (v1 == block.number) {
+        return ;
+    } else {
+        require(bool(varg0.code.size));
+        v2, /* uint256 */ v3 = varg0.accrueInterest().gas(msg.gas);
+        require(bool(v2), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        return ;
+    }
+}
+
+function 0x1548(address varg0) private { 
+    require(bool(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b.code.size));
+    v0, /* uint256 */ v1, /* uint256 */ v2, /* uint256 */ v3 = 0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b.getAccountLiquidity(varg0).gas(msg.gas);
+    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 96);
+    require(0 == v1, Error('bhnl:gal'));
+    v4 = v5 = !v2;
+    if (!bool(v2)) {
+        v4 = v6 = v3 > 0;
+    }
+    return v4;
+}
+
+function 0x1631(uint256 varg0, struct(3) varg1, address varg2, address varg3, uint256 varg4) private { 
+    v0 = v1 = 0;
+    v2 = 0xd5f(this, address(varg4));
+    v3 = v4 = varg1.word2 != uint256.max;
+    if (varg1.word2 != uint256.max) {
+        v3 = v5 = uint256.max != varg1.word0;
+    }
+    if (v3) {
+        v3 = v6 = varg1.word1 != uint256.max;
+    }
+    if (!v3) {
+        v7 = new struct(11);
+        v7.word0 = 0;
+        v7.word1 = 0;
+        v7.word2 = 0;
+        v7.word3 = 0;
+        v7.word4 = 0;
+        v7.word5 = 0;
+        v7.word6 = 0;
+        v7.word7 = 0;
+        v7.word8 = 0;
+        v7.word9 = 0;
+        v7.word10 = False;
+        require(bool((address(varg4)).code.size));
+        v8, /* uint256 */ v9 = address(varg4).borrowBalanceStored(varg2).gas(msg.gas);
+        require(bool(v8), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        v7.word0 = v9;
+        v7.word1 = v9 >> 1;
+        if (v9 >> 1) {
+            v10 = _SafeSub(1, v7.word1);
+            v7.word1 = v10;
+        }
+        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
+        v11, /* uint256 */ v12, /* uint256 */ v13 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).liquidateCalculateSeizeTokens(address(varg4), varg3, 10 ** 18).gas(msg.gas);
+        require(bool(v11), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 64);
+        v7.word2 = v13;
+        if (v13) {
+            require(bool(varg3.code.size));
+            v14, /* uint256 */ v15 = varg3.balanceOf(varg2).gas(msg.gas);
+            require(bool(v14), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+            MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+            require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+            v16 = 0x27f4(10 ** 18, v15);
+            require(v16 + (v7.word2 >> 1) >= v16, Error('ds-math-add-overflow'));
+            assert(v7.word2);
+            v7.word3 = (v16 + (v7.word2 >> 1)) / v7.word2;
+            if ((v16 + (v7.word2 >> 1)) / v7.word2) {
+                v17 = _SafeSub(1, v7.word3);
+                v7.word3 = v17;
+            }
+        }
+        v18 = 0xd48(v7.word3, v7.word1);
+        v19 = 0xd48(v18, varg1.word2);
+        v7.word4 = v19;
+        if (v2 < v19) {
+            v20 = _SafeSub(v2, v7.word4);
+            v7.word5 = v20;
+            if (v7.word4 / 20 < v20) {
+                if (uint256.max == varg1.word0) {
+                    require(bool((address(varg4)).code.size));
+                    v21, /* uint256 */ v22 = address(varg4).balanceOf(address(this)).gas(msg.gas);
+                    require(bool(v21), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+                    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+                    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+                    if (v22 >= 10) {
+                        v23, v24, v25, v26 = 0x217d(varg0, varg4, this);
+                        v7.word9 = v23;
+                        v7.word8 = v24;
+                        v7.word7 = v25;
+                        v7.word6 = v26;
+                        if (v7.word5 > v26) {
+                            v0 = v27 = 0xd48(v7.word7, v7.word5);
+                        }
+                        v7.word10 = 1;
+                    }
+                } else {
+                    v0 = v28 = 0xd48(varg1.word0, v7.word5);
+                }
+            }
+            v29 = _SafeSub(v0, v7.word5);
+            v7.word5 = v29;
+            if (v7.word4 / 20 < v29) {
+                if (varg1.word1 == uint256.max) {
+                    if (!v7.word10) {
+                        v30, v31, v32, v33 = 0x217d(varg0, varg4, this);
+                        v7.word9 = v30;
+                        v7.word8 = v31;
+                        v7.word7 = v32;
+                        v7.word6 = v33;
+                    }
+                    if (v0) {
+                        v0 = v34 = 0xd48(v7.word9, v7.word5);
+                    } else {
+                        v0 = v35 = 0xd48(v7.word8, v7.word5);
+                    }
+                } else {
+                    v0 = v36 = 0xd48(varg1.word1, v7.word5);
+                }
+            }
+            v37 = _SafeAdd(v0, v0);
+            v38 = v39 = _SafeAdd(v37, v2);
+        } else {
+            v38 = v40 = v7.word4;
+        }
+        require(v2 + v0 + v0 >= v38, Error(0x616d74));
+        emit 0x65d607271aa524614901583bb91888998ecd800163848cba0f012a3dd8029c5f(address(varg4), varg1.word0, varg1.word1, varg1.word2, v7.word0, v7.word1, v7.word3, v7.word7, v7.word8, v7.word9);
+        emit 0x8bb178c116f1adecd9ebf3df5d5120b833370f8832a8ca4931b0036b096375f5(v2, v0, v0, v38);
+    } else {
+        v0 = v41 = varg1.word1;
+        v0 = v42 = varg1.word0;
+        v38 = v43 = 0xd48(v2 + v41 + v42, varg1.word2);
+        require(bool((address(varg4)).code.size));
+        v44, /* uint256 */ v45 = address(varg4).borrowBalanceStored(varg2).gas(msg.gas);
+        require(bool(v44), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        assert(2);
+        v38 = v46 = v45 >> 1;
+        if (v43 > v46) {
+        }
+    }
+    return v38, v0, v0;
+}
+
+function 0x1c63(uint256 varg0, address varg1) private { 
+    require(bool(varg1.code.size));
+    v0, /* uint256 */ v1 = varg1.borrow(varg0).gas(msg.gas);
+    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+    return v1;
+}
+
+
+function 0x209f() private { 
+    return map_0[keccak256('cmp/time')];
+}
+
+function 0x20c7(address varg0) private { 
+    if (0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5 != varg0) {
+        return map_0[keccak256('cmp/mark') ^ varg0];
+    } else {
+        return 10 ** 18;
+    }
+}
+
+function 0x2124(uint256 varg0, uint256 varg1) private { 
+    v0 = 0x27f4(10 ** 18, varg1);
+    require(v0 + (varg0 >> 1) >= v0, Error('ds-math-add-overflow'));
+    assert(varg0);
+    return (v0 + (varg0 >> 1)) / varg0;
+}
+
+function 0x2140(uint256 varg0, uint256 varg1, uint256 varg2) private { 
+    v0 = varg2 + varg0 / varg1;
+    require(v0 >= varg2, Error('ds-math-add-overflow'));
+    return v0;
+}
+
+function 0x2155(uint256 varg0, uint256 varg1) private { 
+    v0 = 0x27f4(varg0, varg1);
+    v1 = 0x2140(10 ** 18, 2, v0);
+    assert(10 ** 18);
+    return v1 / 10 ** 18;
+}
+
+function 0x217d(uint256 varg0, address varg1, address varg2) private { 
+    if (varg0) {
+        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
+        v0, /* address */ v1 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).oracle().gas(msg.gas);
+        require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        require(v1 == address(v1));
+        v2 = new struct(22);
+        v2.word0 = 0;
+        v2.word1 = 0;
+        v2.word2 = 0;
+        v2.word3 = 0;
+        v2.word4 = False;
+        v2.word5 = 0;
+        v2.word6 = 0;
+        v2.word7 = 0;
+        v2.word8 = 0;
+        v2.word9 = 0;
+        v2.word10 = 0;
+        v2.word11 = 0;
+        v2.word12 = 0;
+        v2.word13 = 0;
+        v2.word14 = 0;
+        v2.word15 = 0;
+        v2.word16 = 0;
+        v2.word17 = 0;
+        v2.word18 = 0;
+        v2.word19 = 0;
+        v2.word20 = 0;
+        v2.word21 = 0;
+        require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
+        v3, /* uint256 */ v4 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).getAssetsIn(varg2).gas(msg.gas);
+        require(bool(v3), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        RETURNDATACOPY(v4, 0, RETURNDATASIZE());
+        MEM[64] = v4 + (0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0 & RETURNDATASIZE() + 31);
+        require(v4 + RETURNDATASIZE() - v4 >= 32);
+        require(MEM[v4] <= uint64.max);
+        require(v4 + MEM[v4] + 31 < v4 + RETURNDATASIZE());
+        require(MEM[v4 + MEM[v4]] <= uint64.max);
+        v5 = new uint256[](MEM[v4 + MEM[v4]]);
+        require(!((v5 + ((MEM[v4 + MEM[v4]] << 5) + 32) < v5) | (v5 + ((MEM[v4 + MEM[v4]] << 5) + 32) > uint64.max)));
+        v6 = v7 = v4 + MEM[v4] + 32;
+        v8 = v9 = v5.data;
+        require(v7 + (MEM[v4 + MEM[v4]] << 5) <= v4 + RETURNDATASIZE());
+        v10 = v11 = 0;
+        while (v10 < MEM[v4 + MEM[v4]]) {
+            require(MEM[v6] == address(MEM[v6]));
+            MEM[v8] = MEM[v6];
+            v8 += 32;
+            v6 += 32;
+            v10 += 1;
+        }
+        v12 = v13 = 0;
+        while (v12 < v5.length) {
+            assert(v12 < v5.length);
+            require(bool((address(v5[v12])).code.size));
+            v14, /* uint256 */ v15, /* uint256 */ v16, /* uint256 */ v17, /* uint256 */ v18 = address(v5[v12]).getAccountSnapshot(varg2).gas(msg.gas);
+            require(bool(v14), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+            MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+            require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 128);
+            v2.word3 = v18;
+            v2.word2 = v17;
+            v2.word1 = v16;
+            v2.word0 = v15;
+            if (!v15) {
+                v19 = v20 = v2.word1 > 0;
+                if (v2.word1 <= 0) {
+                    v19 = v21 = v2.word2 > 0;
+                }
+                if (!v19) {
+                    v19 = v22 = address(v5[v12]) == varg1;
+                }
+                if (v19) {
+                    require(bool((address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b)).code.size));
+                    v23, /* bool */ v24, /* uint256 */ v25, /* bool */ v26 = address(0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b).markets(address(v5[v12])).gas(msg.gas);
+                    require(bool(v23), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+                    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+                    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 96);
+                    require(v24 == bool(v24));
+                    require(v26 == bool(v26));
+                    v2.word5 = v25;
+                    v2.word4 = bool(v24);
+                    if (v24) {
+                        require(bool((address(v1)).code.size));
+                        v27, /* uint256 */ v28 = address(v1).getUnderlyingPrice(address(v5[v12])).gas(msg.gas);
+                        require(bool(v27), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+                        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+                        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+                        v2.word6 = v28;
+                        if (v28) {
+                            v29 = 0x2155(v2.word6, v2.word5);
+                            v2.word7 = v29;
+                            v30 = 0x2155(v2.word3, v29);
+                            v2.word8 = v30;
+                            v31 = 0x2155(v30, v2.word1);
+                            v32 = _SafeAdd(v31, v2.word9);
+                            v2.word9 = v32;
+                            v33 = 0x2155(v2.word6, v2.word2);
+                            v34 = _SafeAdd(v33, v2.word10);
+                            v2.word10 = v34;
+                            if (varg1 == address(v5[v12])) {
+                                v2.word11 = v2.word6;
+                                v2.word12 = v2.word7;
+                                v35 = 0x2155(v2.word8, v2.word1);
+                                v2.word13 = v35;
+                                v36 = 0x2155(v2.word3, v2.word1);
+                                v2.word14 = v36;
+                                v37 = 0x2155(v2.word3, 2);
+                                v2.word18 = v37;
+                            }
+                        }
+                    }
+                }
+                v12 += 1;
+            } else {
+                return 0, 0, 0, 0;
+            }
+        }
+        v38 = 0x2155(varg0, v2.word9);
+        v2.word16 = v38;
+        v39 = v40 = v2.word10 < v38;
+        if (v40) {
+            v39 = v41 = v2.word11 > 0;
+        }
+        if (v39) {
+            v42 = _SafeSub(v2.word10, v2.word16);
+            v2.word17 = v42;
+            v43 = 0x2124(v2.word11, v42);
+            v2.word20 = v43;
+            if (v2.word14 <= v2.word18) {
+                v2.word21 = v2.word20;
+            } else {
+                v44 = 0x2155(varg0, v2.word13);
+                v2.word15 = v44;
+                if (v2.word17 <= v44) {
+                    v45 = 0x2124(v2.word12, v2.word17);
+                    v2.word19 = v45;
+                    if (v2.word18 > v45) {
+                        v2.word19 = 0;
+                    }
+                } else {
+                    v2.word19 = v2.word14;
+                    v46 = _SafeSub(v2.word15, v2.word17);
+                    v47 = 0x2124(v2.word11, v46);
+                    v2.word21 = v47;
+                }
+            }
+        }
+        emit 0x759f59ae1c5f93b58757b8cbf263c6d5222b08ce3a3c5e9441d73c92fc0c3dc0(varg2, varg1, varg0, v2.word9, v2.word10, v2.word16, v2.word17, v2.word15, v2.word18, v2.word19, v2.word20, v2.word21);
+        return v2.word21, v2.word20, v2.word19, v2.word18;
+    } else {
+        return 0, 0, 0, 0;
+    }
+}
+
+function 0x268(uint256 varg0, address varg1) private { 
+    require(bool(varg1.code.size));
+    v0, /* uint256 */ v1 = varg1.borrowBalanceCurrent(address(this)).gas(msg.gas);
+    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+    if (v1) {
+        v2 = 0xca7(this, varg1);
+        if (v2) {
+            v3 = 0xd48(v1, v2);
+            v4 = 0xd48(v3, varg0);
+            if (v4) {
+                v5 = 0xd5f(this, varg1);
+                v6 = 0xe7c(v4, varg1);
+                require(!v6, Error(0x726564));
+                v7 = 0xd5f(this, varg1);
+                if (v7 <= v5) {
+                    return ;
+                } else {
+                    v8 = _SafeSub(v5, v7);
+                    v9 = 0xd48(v1, v8);
+                    v10 = 0xee7(v9, varg1);
+                    require(!v10, Error(0x726570));
+                    return ;
+                }
+            } else {
+                return ;
+            }
+        } else {
+            return ;
+        }
+    } else {
+        return ;
+    }
+}
+
+function _SafeAdd(uint256 varg0, uint256 varg1) private { 
+    require(varg1 + varg0 >= varg1, Error('ds-math-add-overflow'));
+    return varg1 + varg0;
+}
+
+function 0x27f4(uint256 varg0, uint256 varg1) private { 
+    v0 = v1 = 0;
+    v2 = v3 = !varg0;
+    if (varg0) {
+        v0 = v4 = varg1 * varg0;
+        assert(varg0);
+        v2 = v5 = v4 / varg0 == varg1;
+    }
+    require(v2, Error('ds-math-mul-overflow'));
+    return v0;
+}
+
+function 0x492(uint256 varg0, address varg1) private { 
+    require(bool(varg1.code.size));
+    v0, /* uint256 */ v1 = varg1.balanceOf(address(this)).gas(msg.gas);
+    require(bool(v0), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+    MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+    require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+    if (v1 <= varg0) {
+        return 0;
+    } else {
+        v2 = _SafeSub(varg0, v1);
+        require(bool(varg1.code.size));
+        v3, /* uint256 */ v4 = varg1.redeem(v2).gas(msg.gas);
+        require(bool(v3), 0, RETURNDATASIZE()); // checks call status, propagates error data on error
+        MEM[64] = MEM[64] + (RETURNDATASIZE() + 31 & 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0);
+        require(MEM[64] + RETURNDATASIZE() - MEM[64] >= 32);
+        return v4;
+    }
+}
+
+function function_selector() public payable { 
+    revert();
+}
+
 
 function 0x41bb257f(address varg0, uint256 varg1) public payable { 
     require(msg.data.length - 4 >= 64);
